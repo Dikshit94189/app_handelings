@@ -7,12 +7,12 @@ import 'package:new_tasks/firebase_options.dart';
 import 'package:new_tasks/screens/dashboard/dashborad_screen.dart';
 import 'package:new_tasks/screens/home_screen.dart';
 import 'package:new_tasks/screens/login_screen.dart';
+import 'package:new_tasks/services/hive_services.dart';
 
 void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  await Hive.openBox('appBox');
+  await HiveServices.init();
   runApp(const MyApp());
 }
 
@@ -33,20 +33,21 @@ Widget? _defaultScreen;
   }
 
  Future<void> checkFirstTime() async{
-    final box = Hive.box('appBox');
-    bool isFirstTime = box.get('isFirstTime', defaultValue: true);
-    User? user = FirebaseAuth.instance.currentUser;
+      bool isFirstTime = HiveServices.isFirstTime();
+      User? user  =   FirebaseAuth.instance.currentUser;
+      if(isFirstTime){
+        await HiveServices.setFirstTime(false);
+        _defaultScreen = DashboardScreen();
+      }else if(user != null){
+        _defaultScreen =  HomeScreen();
+      }else{
+        _defaultScreen = LoginScreen();
+      }
 
-    if(isFirstTime){
-      await box.put('isFirstTime', false);
-      _defaultScreen = DashboardScreen();
-    }else if( user != null){
-      _defaultScreen = HomeScreen();
-    }else{
-      _defaultScreen = LoginScreen();
-    }
-    setState(() {});
+      setState(() {});
  }
+
+
   @override
   Widget build(BuildContext context) {
     if(_defaultScreen==null){

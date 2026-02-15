@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
-class HiveScrvice{
+class HiveServices{
   static const String _boxName = 'appBox';
   static Box? _box;
 
