@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
 
 
-          Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
     } on FirebaseAuthException catch(e){
       if(e.code == 'user-not-found'){
         HelperUtils.showMessage(context, "No user found for that email." , Colors.cyan);
