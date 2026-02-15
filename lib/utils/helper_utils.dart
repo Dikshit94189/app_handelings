@@ -1,3 +1,10 @@
+import 'package:flutter/material.dart';
+
 class HelperUtils{
 
+  static void   showMessage(BuildContext context , String message ,  Color color){
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message , style: TextStyle(color: color),)),
+    );
+  }
 }
