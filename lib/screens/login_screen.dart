@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/helper_utils.dart';
 import 'home_screen.dart';
+import 'main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -42,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
       //     );
 
 
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => MainScreen()));
     } on FirebaseAuthException catch(e){
       if(e.code == 'user-not-found'){
         HelperUtils.showMessage(context, "No user found for that email." , Colors.cyan);
