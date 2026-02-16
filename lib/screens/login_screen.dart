@@ -31,15 +31,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> login() async {
     try {
-      // await FirebaseAuth.instance.signInWithEmailAndPassword(
-          // email: emailController.text.trim(),
-          // password: passController.text.trim());
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passController.text.trim());
 
       /// create static user
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: "test@gmail.com",
-            password: "123456",
-          );
+      //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      //       email: "test@gmail.com",
+      //       password: "123456",
+      //     );
 
 
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));

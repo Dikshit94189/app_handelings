@@ -8,8 +8,8 @@ import 'package:new_tasks/screens/login_screen.dart';
 import 'package:new_tasks/services/hive_services.dart';
 
 void main() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await HiveServices.init();
   runApp(const MyApp());
 }
