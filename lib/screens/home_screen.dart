@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 
 import 'login_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
 
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (_) => LoginScreen()),
-          (route) => false,
+    Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (_) => LoginScreen()),(route) => false,
     );
   }
 
