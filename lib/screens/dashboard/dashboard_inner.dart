@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../login_screen.dart';
 
 class Screen1 extends StatelessWidget {
+  const Screen1({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,6 +15,8 @@ class Screen1 extends StatelessWidget {
 }
 
 class Screen2 extends StatelessWidget {
+  const Screen2({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +27,8 @@ class Screen2 extends StatelessWidget {
 }
 
 class Screen3 extends StatelessWidget {
+  const Screen3({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

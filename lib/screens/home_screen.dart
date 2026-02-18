@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -57,14 +58,15 @@ class _HomeScreenState extends State<HomeScreen> {
         left: 20,
         right: 0,
         child: Container(
-          height: 120,
-          color: Colors.black.withOpacity(0.6),
+          height: 250,
+          // color: Colors.black.withOpacity(0.6),
+          color: Colors.transparent,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 20,
             itemBuilder: (context, index) {
               return Container(
-                width: 120,
+                width: 250,
                 margin: const EdgeInsets.all(8),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
