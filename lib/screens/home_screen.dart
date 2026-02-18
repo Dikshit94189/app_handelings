@@ -36,16 +36,55 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: MediaQuery.sizeOf(context).height * 0.9,
-              width: double.infinity,
-              child: CachedNetworkImage(
-                imageUrl:
-                "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200",
-                fit: BoxFit.cover,
-              )
 
-            ),
+        Stack(
+        children: [
+
+        /// 🔹 Background Image
+        SizedBox(
+        height: MediaQuery.sizeOf(context).height * 0.9,
+        width: double.infinity,
+        child: CachedNetworkImage(
+          imageUrl:
+          "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200",
+          fit: BoxFit.cover,
+        ),
+      ),
+
+      /// 🔹 Bottom ListView Positioned on Image
+      Positioned(
+        bottom:25,
+        left: 20,
+        right: 0,
+        child: Container(
+          height: 120,
+          color: Colors.black.withOpacity(0.6),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 20,
+            itemBuilder: (context, index) {
+              return Container(
+                width: 120,
+                margin: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  "Item ${index + 1}",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+      ],
+    ),
 
 
           ],
