@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'login_screen.dart';
@@ -49,6 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
           imageUrl:
           "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200",
           fit: BoxFit.cover,
+          placeholder: (context,url)=>Center(
+            child: CupertinoActivityIndicator(radius: 16,color: Colors.blue),
+          ),
         ),
       ),
 
