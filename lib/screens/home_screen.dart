@@ -2,7 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_tasks/view_model/quote_view.dart';
+import 'package:provider/provider.dart';
 
+import '../utils/api_response.dart';
 import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,6 +16,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.microtask(() => Provider.of<QuoteViewModel>(context , listen: false).getRandomQuote());
+  }
+
+
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
 
@@ -55,6 +67,26 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+
+      Positioned(
+          top: 10,
+          left: 10,right: 10,
+          child: Consumer<QuoteViewModel>(
+              builder: (context , viewModel , child){
+                switch (viewModel.quoteResponse.status){
+                  case Status.loading:
+                    return Center(child: CircularProgressIndicator(color: Colors.red));
+
+                  case Status.complete:
+                    final quote = viewModel.quoteResponse.data;
+                    return Text('data' , style: TextStyle(color: Colors.red , fontSize: 22));
+
+
+                  case Status.error:
+                    return Text("Error");
+                }
+              },
+              )),
 
       /// 🔹 Bottom ListView Positioned on Image
       Positioned(

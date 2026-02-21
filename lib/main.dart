@@ -6,6 +6,8 @@ import 'package:new_tasks/screens/dashboard/dashborad_screen.dart';
 import 'package:new_tasks/screens/home_screen.dart';
 import 'package:new_tasks/screens/login_screen.dart';
 import 'package:new_tasks/services/hive_services.dart';
+import 'package:new_tasks/view_model/quote_view.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,9 +58,14 @@ Widget? _defaultScreen;
       );
     }
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: _defaultScreen
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => QuoteViewModel()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: _defaultScreen
+      ),
     );
   }
 }
