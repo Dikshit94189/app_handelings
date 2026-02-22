@@ -8,6 +8,141 @@ import 'package:provider/provider.dart';
 import '../utils/api_response.dart';
 import 'login_screen.dart';
 
+// class HomeScreen extends StatefulWidget {
+//   const HomeScreen({super.key});
+//
+//   @override
+//   State<HomeScreen> createState() => _HomeScreenState();
+// }
+//
+// class _HomeScreenState extends State<HomeScreen> {
+//
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+//     Future.microtask(() => Provider.of<QuoteViewModel>(context , listen: false).getRandomQuote());
+//   }
+//
+//
+//   Future<void> logout(BuildContext context) async {
+//     await FirebaseAuth.instance.signOut();
+//
+//     Navigator.pushAndRemoveUntil(
+//       context,
+//       MaterialPageRoute(builder: (_) => LoginScreen()),
+//       (route) => false,
+//     );
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text("Home"),
+//         actions: [
+//           IconButton(
+//             icon: Icon(Icons.logout),
+//             onPressed: () => logout(context),
+//           ),
+//         ],
+//       ),
+//       body: SingleChildScrollView(
+//         child: Column(
+//           children: [
+//
+//         Stack(
+//         children: [
+//
+//         /// 🔹 Background Image
+//         SizedBox(
+//         height: MediaQuery.sizeOf(context).height * 0.9,
+//         width: double.infinity,
+//         child: CachedNetworkImage(
+//           imageUrl:
+//           "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200",
+//           fit: BoxFit.cover,
+//           placeholder: (context,url)=>Center(
+//             child: CupertinoActivityIndicator(radius: 16,color: Colors.blue),
+//           ),
+//         ),
+//       ),
+//
+//       Positioned(
+//           top: 10,
+//           left: 10,right: 10,
+//           child: Consumer<QuoteViewModel>(
+//               builder: (context , viewModel , child){
+//                 switch (viewModel.quoteResponse.status){
+//                   case Status.loading:
+//                     return CupertinoActivityIndicator();
+//                   case Status.complete:
+//                     final quote = viewModel.quoteResponse.data;
+//                     return Text(quote!.quote , style: TextStyle(color: Colors.purple ,fontWeight: FontWeight.bold, fontSize: 22));
+//                   case Status.error:
+//                     return Text("Error");
+//                 }
+//               },
+//               )),
+//
+//       /// 🔹 Bottom ListView Positioned on Image
+//       Positioned(
+//         bottom:25,
+//         left: 20,
+//         right: 0,
+//         child: Consumer<QuoteViewModel>(
+//           builder: (context , viewModel , child){
+//             switch(viewModel.imagesResponse.status){
+//               case Status.loading:
+//                 return CupertinoActivityIndicator();
+//               case Status.complete :
+//                 final image = viewModel.imagesResponse.data;
+//                 return Container(
+//                   height: 250,
+//                   // color: Colors.black.withOpacity(0.6),
+//                   color: Colors.transparent,
+//                   child: ListView.builder(
+//                     scrollDirection: Axis.horizontal,
+//                     itemCount: 20,
+//                     itemBuilder: (context, index) {
+//                       return Container(
+//                         width: 250,
+//                         margin: const EdgeInsets.all(8),
+//                         alignment: Alignment.center,
+//                         decoration: BoxDecoration(
+//                           color: Colors.white,
+//                           borderRadius: BorderRadius.circular(12),
+//                         ),
+//                         child: CachedNetworkImage(
+//                           imageUrl: image!.url.toString(),
+//                         ),
+//                       );
+//                     },
+//                   ),
+//                 );
+//               case Status.error:
+//                 return Text("Error");
+//
+//             }
+//
+//           },
+//         ),
+//       ),
+//
+//
+//
+//       ],
+//     ),
+//
+//
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -19,129 +154,59 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Future.microtask(() => Provider.of<QuoteViewModel>(context , listen: false).getRandomQuote());
-  }
-
-
-  Future<void> logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (_) => LoginScreen()),
-      (route) => false,
-    );
+    Future.microtask(() =>
+        Provider.of<QuoteViewModel>(context, listen: false)
+            .getRandomQuote());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () => logout(context),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
+    return Stack(
+      children: [
 
-        Stack(
-        children: [
-
-        /// 🔹 Background Image
-        SizedBox(
-        height: MediaQuery.sizeOf(context).height * 0.9,
-        width: double.infinity,
-        child: CachedNetworkImage(
-          imageUrl:
-          "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200",
-          fit: BoxFit.cover,
-          placeholder: (context,url)=>Center(
-            child: CupertinoActivityIndicator(radius: 16,color: Colors.blue),
+        /// Background
+        Positioned.fill(
+          child: CachedNetworkImage(
+            imageUrl:
+            "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200",
+            fit: BoxFit.cover,
           ),
         ),
-      ),
 
-      Positioned(
-          top: 10,
-          left: 10,right: 10,
+        /// Quote
+        Positioned(
+          top: 20,
+          left: 16,
+          right: 16,
           child: Consumer<QuoteViewModel>(
-              builder: (context , viewModel , child){
-                switch (viewModel.quoteResponse.status){
-                  case Status.loading:
-                    return CupertinoActivityIndicator();
-                  case Status.complete:
-                    final quote = viewModel.quoteResponse.data;
-                    return Text(quote!.quote , style: TextStyle(color: Colors.purple ,fontWeight: FontWeight.bold, fontSize: 22));
-                  case Status.error:
-                    return Text("Error");
-                }
-              },
-              )),
+            builder: (context, viewModel, child) {
+              switch (viewModel.quoteResponse.status) {
+                case Status.loading:
+                  return const CupertinoActivityIndicator();
 
-      /// 🔹 Bottom ListView Positioned on Image
-      Positioned(
-        bottom:25,
-        left: 20,
-        right: 0,
-        child: Consumer<QuoteViewModel>(
-          builder: (context , viewModel , child){
-            switch(viewModel.imagesResponse.status){
-              case Status.loading:
-                return CupertinoActivityIndicator();
-              case Status.complete :
-                final image = viewModel.imagesResponse.data;
-                return Container(
-                  height: 250,
-                  // color: Colors.black.withOpacity(0.6),
-                  color: Colors.transparent,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 20,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        width: 250,
-                        margin: const EdgeInsets.all(8),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          "Item ${index + 1}",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              case Status.error:
-                return Text("Error");
+                case Status.complete:
+                  final quote = viewModel.quoteResponse.data;
+                  return Text(
+                    quote?.quote ?? "",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
+                  );
 
-            }
-
-          },
+                case Status.error:
+                  return const Text("Error");
+              }
+            },
+          ),
         ),
-      ),
+
 
 
 
       ],
-    ),
-
-
-          ],
-        ),
-      ),
     );
   }
 }
