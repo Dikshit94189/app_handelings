@@ -24,9 +24,10 @@ class QuoteViewModel extends ChangeNotifier {
 
   /// *****************   Home Images  Api   *************************  ///////////
 
-  ApiResponse<RandomImages> imagesResponse = ApiResponse.loading();
+  ApiResponse<List<RandomImages>> imagesResponse = ApiResponse.loading();
+
   Future<void> getRandomImages() async {
-    quoteResponse = ApiResponse.loading();
+    imagesResponse = ApiResponse.loading();
     notifyListeners();
 
     try {

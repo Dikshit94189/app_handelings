@@ -204,6 +204,49 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
 
 
+    Positioned(
+        bottom:25,
+        left: 20,
+        right: 0,
+        child: Consumer<QuoteViewModel>(
+          builder: (context , viewModel , child){
+            switch(viewModel.imagesResponse.status){
+              case Status.loading:
+                return CupertinoActivityIndicator();
+              case Status.complete:
+                final images = viewModel.imagesResponse.data;
+
+                return SizedBox(
+                  height: 250,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: images!.length,
+                    itemBuilder: (context, index) {
+                      final image = images[index];
+
+                      return Container(
+                        width: 250,
+                        margin: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: image.url ?? "",
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                  ),
+                );
+              case Status.error:
+                return Text("Error");
+
+            }
+
+          },
+        ),
+      ),
 
 
       ],

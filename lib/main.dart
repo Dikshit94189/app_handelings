@@ -5,6 +5,7 @@ import 'package:new_tasks/firebase_options.dart';
 import 'package:new_tasks/screens/dashboard/dashborad_screen.dart';
 import 'package:new_tasks/screens/home_screen.dart';
 import 'package:new_tasks/screens/login_screen.dart';
+import 'package:new_tasks/screens/main_screen.dart';
 import 'package:new_tasks/services/hive_services.dart';
 import 'package:new_tasks/view_model/quote_view.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ Widget? _defaultScreen;
         await HiveServices.setFirstTime(false);
         _defaultScreen = DashboardScreen();
       }else if(user != null){
-        _defaultScreen =  HomeScreen();
+        _defaultScreen =  MainScreen();
       }else{
         _defaultScreen = LoginScreen();
       }

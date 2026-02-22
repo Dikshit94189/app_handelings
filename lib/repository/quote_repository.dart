@@ -12,10 +12,11 @@ class QuoteRepository{
 
   /// *****************   Home Images  Api   *************************  ///////////
 
-  Future<RandomImages> fetchImages() async {
+  Future<List<RandomImages>> fetchImages() async {
     final response = await _apiClient.get('https://api.thecatapi.com/v1/images/search');
-    return RandomImages.fromJson(response);
-  }
+    return (response as List)
+        .map((e) => RandomImages.fromJson(e))
+        .toList();  }
 
 
 }
