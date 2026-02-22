@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   case Status.complete:
                     final quote = viewModel.quoteResponse.data;
-                    return Text('data' , style: TextStyle(color: Colors.red , fontSize: 22));
+                    return Text(quote!.quote , style: TextStyle(color: Colors.purple ,fontWeight: FontWeight.bold, fontSize: 22));
 
 
                   case Status.error:

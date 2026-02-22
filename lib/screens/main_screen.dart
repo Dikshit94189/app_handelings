@@ -35,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
-            label: "Dashboard",
+            label: "Profile",
           ),
         ],
       ),
