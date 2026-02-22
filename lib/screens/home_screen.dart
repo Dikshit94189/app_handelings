@@ -76,12 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 switch (viewModel.quoteResponse.status){
                   case Status.loading:
                     return CupertinoActivityIndicator();
-
                   case Status.complete:
                     final quote = viewModel.quoteResponse.data;
                     return Text(quote!.quote , style: TextStyle(color: Colors.purple ,fontWeight: FontWeight.bold, fontSize: 22));
-
-
                   case Status.error:
                     return Text("Error");
                 }
@@ -93,37 +90,51 @@ class _HomeScreenState extends State<HomeScreen> {
         bottom:25,
         left: 20,
         right: 0,
-        child: Container(
-          height: 250,
-          // color: Colors.black.withOpacity(0.6),
-          color: Colors.transparent,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 20,
-            itemBuilder: (context, index) {
-              return Container(
-                width: 250,
-                margin: const EdgeInsets.all(8),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  "Item ${index + 1}",
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+        child: Consumer<QuoteViewModel>(
+          builder: (context , viewModel , child){
+            switch(viewModel.imagesResponse.status){
+              case Status.loading:
+                return CupertinoActivityIndicator();
+              case Status.complete :
+                final image = viewModel.imagesResponse.data;
+                return Container(
+                  height: 250,
+                  // color: Colors.black.withOpacity(0.6),
+                  color: Colors.transparent,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 20,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        width: 250,
+                        margin: const EdgeInsets.all(8),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          "Item ${index + 1}",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                ),
-              );
-            },
-          ),
+                );
+              case Status.error:
+                return Text("Error");
+
+            }
+
+          },
         ),
       ),
 
 
-          
+
       ],
     ),
 
