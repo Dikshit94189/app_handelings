@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context , viewModel , child){
                 switch (viewModel.quoteResponse.status){
                   case Status.loading:
-                    return Center(child: CircularProgressIndicator(color: Colors.red));
+                    return CupertinoActivityIndicator();
 
                   case Status.complete:
                     final quote = viewModel.quoteResponse.data;
