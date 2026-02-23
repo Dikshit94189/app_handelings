@@ -155,101 +155,109 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<QuoteViewModel>(context, listen: false)
-            .getRandomQuote());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final viewModel = context.read<QuoteViewModel>();
+
+      viewModel.getRandomQuote();
+      viewModel.getRandomImages();   // 🔥 YOU MISSED THIS
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
+    return Scaffold(
+      body  : SafeArea(
+        child: Stack(
+          children: [
 
-        /// Background
-        Positioned.fill(
-          child: CachedNetworkImage(
-            imageUrl:
-            "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200",
-            fit: BoxFit.cover,
-          ),
-        ),
+            /// Background
+            Positioned.fill(
+              child: CachedNetworkImage(
+                imageUrl:
+                "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200",
+                fit: BoxFit.cover,
+              ),
+            ),
 
-        /// Quote
-        Positioned(
-          top: 20,
-          left: 16,
-          right: 16,
-          child: Consumer<QuoteViewModel>(
-            builder: (context, viewModel, child) {
-              switch (viewModel.quoteResponse.status) {
-                case Status.loading:
-                  return const CupertinoActivityIndicator();
+            /// Quote
+            Positioned(
+              top: 20,
+              left: 16,
+              right: 16,
+              child: Consumer<QuoteViewModel>(
+                builder: (context, viewModel, child) {
+                  switch (viewModel.quoteResponse.status) {
+                    case Status.loading:
+                      return const CupertinoActivityIndicator();
 
-                case Status.complete:
-                  final quote = viewModel.quoteResponse.data;
-                  return Text(
-                    quote?.quote ?? "",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                    ),
-                  );
-
-                case Status.error:
-                  return const Text("Error");
-              }
-            },
-          ),
-        ),
-
-
-    Positioned(
-        bottom:25,
-        left: 20,
-        right: 0,
-        child: Consumer<QuoteViewModel>(
-          builder: (context , viewModel , child){
-            switch(viewModel.imagesResponse.status){
-              case Status.loading:
-                return CupertinoActivityIndicator();
-              case Status.complete:
-                final images = viewModel.imagesResponse.data;
-
-                return SizedBox(
-                  height: 250,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: images!.length,
-                    itemBuilder: (context, index) {
-                      final image = images[index];
-
-                      return Container(
-                        width: 250,
-                        margin: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
+                    case Status.complete:
+                      final quote = viewModel.quoteResponse.data;
+                      return Text(
+                        quote?.quote ?? "",
+                        style: const TextStyle(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: CachedNetworkImage(
-                          imageUrl: image.url ?? "",
-                          fit: BoxFit.cover,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
                         ),
                       );
-                    },
-                  ),
-                );
-              case Status.error:
-                return Text("Error");
 
-            }
+                    case Status.error:
+                      return const Text("Error");
+                  }
+                },
+              ),
+            ),
 
-          },
+
+        Positioned(
+            bottom:25,
+            left: 20,
+            right: 0,
+            child: Consumer<QuoteViewModel>(
+              builder: (context , viewModel , child){
+                switch(viewModel.imagesResponse.status){
+                  case Status.loading:
+                    return CupertinoActivityIndicator();
+                  case Status.complete:
+                    final images = viewModel.imagesResponse.data;
+
+                    return SizedBox(
+                      height: 250,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: images!.length,
+                        itemBuilder: (context, index) {
+                          final image = images[index];
+
+                          return Container(
+                            width: 250,
+                            margin: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: image.url ?? "",
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  case Status.error:
+                    return Text("Error");
+
+                }
+
+              },
+            ),
+          ),
+
+
+          ],
         ),
       ),
-
-
-      ],
     );
   }
 }

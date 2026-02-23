@@ -10,64 +10,64 @@ import 'package:new_tasks/services/hive_services.dart';
 import 'package:new_tasks/view_model/quote_view.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await HiveServices.init();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-Widget? _defaultScreen;
-
-  @override
-  void initState() {
-    super.initState();
-    checkFirstTime();
+  void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await HiveServices.init();
+    runApp(const MyApp());
   }
 
- Future<void> checkFirstTime() async{
-      bool isFirstTime = HiveServices.isFirstTime();
-      User? user  =   FirebaseAuth.instance.currentUser;
-      if(isFirstTime){
-        await HiveServices.setFirstTime(false);
-        _defaultScreen = DashboardScreen();
-      }else if(user != null){
-        _defaultScreen =  MainScreen();
-      }else{
-        _defaultScreen = LoginScreen();
+  class MyApp extends StatefulWidget {
+    const MyApp({super.key});
+
+    @override
+    State<MyApp> createState() => _MyAppState();
+  }
+
+  class _MyAppState extends State<MyApp> {
+  Widget? _defaultScreen;
+
+    @override
+    void initState() {
+      super.initState();
+      checkFirstTime();
+    }
+
+   Future<void> checkFirstTime() async{
+        bool isFirstTime = HiveServices.isFirstTime();
+        User? user  =   FirebaseAuth.instance.currentUser;
+        if(isFirstTime){
+          await HiveServices.setFirstTime(false);
+          _defaultScreen = DashboardScreen();
+        }else if(user != null){
+          _defaultScreen =  MainScreen();
+        }else{
+          _defaultScreen = LoginScreen();
+        }
+
+        setState(() {});
+   }
+
+
+    @override
+    Widget build(BuildContext context) {
+      if(_defaultScreen==null){
+        return MaterialApp(
+          home: Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
+        );
       }
 
-      setState(() {});
- }
-
-
-  @override
-  Widget build(BuildContext context) {
-    if(_defaultScreen==null){
-      return MaterialApp(
-        home: Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+      return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => QuoteViewModel()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: _defaultScreen ?? const SizedBox(),
         ),
       );
     }
-
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => QuoteViewModel()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: _defaultScreen
-      ),
-    );
   }
-}
 
