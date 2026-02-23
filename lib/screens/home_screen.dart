@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final viewModel = context.read<QuoteViewModel>();
 
       viewModel.getRandomQuote();
-      // viewModel.getRandomImages();   // 🔥 YOU MISSED THIS
+      viewModel.getRandomImages();   // 🔥 YOU MISSED THIS
     });
   }
 
@@ -219,7 +219,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 return CupertinoActivityIndicator();
               case Status.complete:
                 final images = viewModel.imagesResponse.data;
-
+                if (images == null || images.isEmpty) {
+                  return const Center(child: Text("No Images"));
+                }
                 return SizedBox(
                   height: 250,
                   child: ListView.builder(
@@ -235,10 +237,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: CachedNetworkImage(
-                          imageUrl: image.url ?? "",
+                        child: image.url != null && image.url!.isNotEmpty
+                            ? CachedNetworkImage(
+                          imageUrl: image.url!,
                           fit: BoxFit.cover,
-                        ),
+                          placeholder: (context, url) =>
+                          const CupertinoActivityIndicator(),
+                          errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                        )
+                            : const Icon(Icons.image_not_supported),
                       );
                     },
                   ),

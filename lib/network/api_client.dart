@@ -5,7 +5,7 @@ import 'api_exception.dart';
 class ApiClient{
   final Dio _dio = Dio();
 
-  Future<Map<String , dynamic>> get(String url) async{
+  Future<dynamic> get(String url) async{
     try{
       final response =  await _dio.get(url);
 
