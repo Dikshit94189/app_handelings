@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         child: image.url != null && image.url!.isNotEmpty
                             ? CachedNetworkImage(
-                          imageUrl: image.url!,
+                          imageUrl: image.thumbnailUrl,
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
                           const CupertinoActivityIndicator(),

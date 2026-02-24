@@ -16,11 +16,7 @@ class QuoteRepository {
 
   Future<List<RandomImages>> fetchImages() async {
     final response = await _apiClient.get(
-      // 'https://api.thecatapi.com/v1/images/search',
-      // 'https://api.thecatapi.com/v1/images/search?limit=10&mime_types=jpg,png',
-      // 'https://api.thecatapi.com/v1/images/search?limit=10&mime_types=jpg,png&size=small',
-        'https://api.thecatapi.com/v1/images/search?limit=10&mime_types=jpg,png&size=small'
-
+        "https://jsonplaceholder.typicode.com/photos"
     );
 
     return (response as List).map((e) => RandomImages.fromJson(e)).toList();
