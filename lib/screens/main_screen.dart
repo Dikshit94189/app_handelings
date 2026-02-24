@@ -140,19 +140,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: image.url != null && image.url!.isNotEmpty
-                            ? CachedNetworkImage(
-                          imageUrl: image.thumbnailUrl,
+                        child: CachedNetworkImage(
+                          imageUrl: image.downloadUrl,
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
                           const CupertinoActivityIndicator(),
-                          errorWidget: (context, url, error) {
-                            print("Image load error: $error");
-                            print("Failed URL: $url");
-                            return const Icon(Icons.error, color: Colors.red);
-                          },
-                        )
-                            : const Icon(Icons.image_not_supported),
+                          errorWidget: (context, url, error) =>
+                          const Icon(Icons.broken_image),
+                        ),
                       );
                     },
                   ),

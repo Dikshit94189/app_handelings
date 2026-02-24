@@ -238,16 +238,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: image.url != null && image.url!.isNotEmpty
-                            ? CachedNetworkImage(
-                          imageUrl: image.url!,
+                        child: CachedNetworkImage(
+                          imageUrl: image.downloadUrl,
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
                           const CupertinoActivityIndicator(),
                           errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                        )
-                            : const Icon(Icons.image_not_supported),
+                          const Icon(Icons.broken_image),
+                        ),
                       );
                     },
                   ),

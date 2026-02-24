@@ -16,7 +16,8 @@ class QuoteRepository {
 
   Future<List<RandomImages>> fetchImages() async {
     final response = await _apiClient.get(
-        "https://jsonplaceholder.typicode.com/photos"
+        // "https://jsonplaceholder.typicode.com/photos"
+        "https://picsum.photos/v2/list?page=1&limit=20"
     );
 
     return (response as List).map((e) => RandomImages.fromJson(e)).toList();
