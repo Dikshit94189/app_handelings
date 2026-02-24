@@ -219,6 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return CupertinoActivityIndicator();
               case Status.complete:
                 final images = viewModel.imagesResponse.data;
+                
                 if (images == null || images.isEmpty) {
                   return const Center(child: Text("No Images"));
                 }

@@ -8,7 +8,7 @@ class ApiClient{
   Future<dynamic> get(String url) async{
     try{
       final response =  await _dio.get(url);
-
+      print("Headers in Api Client${response.headers}");
       if(response.statusCode == 200){
         return response.data;
       }else{

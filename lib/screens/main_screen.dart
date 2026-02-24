@@ -146,8 +146,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
                           const CupertinoActivityIndicator(),
-                          errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                          errorWidget: (context, url, error) {
+                            print("Image load error: $error");
+                            print("Failed URL: $url");
+                            return const Icon(Icons.error, color: Colors.red);
+                          },
                         )
                             : const Icon(Icons.image_not_supported),
                       );
