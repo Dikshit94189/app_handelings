@@ -140,13 +140,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: CachedNetworkImage(
-                          imageUrl: image.downloadUrl,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) =>
-                          const CupertinoActivityIndicator(),
-                          errorWidget: (context, url, error) =>
-                          const Icon(Icons.broken_image),
+                        child: ClipRect(
+                          clipBehavior: Clip.hardEdge,
+                          child: CachedNetworkImage(
+                            imageUrl: image.downloadUrl,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) =>
+                            const CupertinoActivityIndicator(),
+                            errorWidget: (context, url, error) =>
+                            const Icon(Icons.broken_image),
+                          ),
                         ),
                       );
                     },
