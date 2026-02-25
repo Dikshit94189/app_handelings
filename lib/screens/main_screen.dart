@@ -140,8 +140,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: ClipRect(
-                          clipBehavior: Clip.hardEdge,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
                           child: CachedNetworkImage(
                             imageUrl: image.downloadUrl,
                             fit: BoxFit.cover,
