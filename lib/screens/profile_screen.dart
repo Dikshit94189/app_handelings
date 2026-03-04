@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           builder: (context , viewModel , child){
             switch(viewModel.imagesResponse.status){
               case Status.loading:
-                return CupertinoActivityIndicator();
+                return CircularProgressIndicator(color: CupertinoColors.black,strokeWidth: 2,);
               case Status.complete:
                 final images = viewModel.imagesResponse.data;
 
