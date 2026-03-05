@@ -20,7 +20,7 @@ class Screen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Screen 2")),
+      appBar: AppBar(title: Text("Screen Second")),
       body: Center(child: Text("This is Screen 2")),
     );
   }
